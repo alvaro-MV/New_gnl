@@ -1,0 +1,5 @@
+Una funcion variadica es una función que admite un número
+
+indefinido de argumentos. Estos argumentos pueden ser de
+
+tipo indeterminado.
