@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:47:09 by alvaro            #+#    #+#             */
-/*   Updated: 2024/04/24 15:22:47 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/07/01 19:51:54 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	ft_lstadd_front(t_list **lst, char *content)
 	t_list	*list;
 	t_list	*new_n;
 
+	if (!content)
+		return ;
 	new_n = (t_list *) malloc(sizeof(t_list));
 	if (new_n == NULL)
 		return ;
@@ -49,6 +51,8 @@ void	ft_lstadd_back(t_list **lst, char *content)
 	t_list	*holder;
 	t_list	*new_n;
 
+	if (!content)
+		return ;
 	new_n = (t_list *) malloc(sizeof(t_list));
 	if (new_n == NULL)
 		return ;
