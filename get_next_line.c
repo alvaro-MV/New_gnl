@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:37:28 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/05 18:23:01 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/05 19:55:37 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,27 @@ char    *ft_strdup(const char *s1)
 
 int	get_lst_from_reads(int fd, t_list **lst)
 {
-	char	read_buffer[BUFFER_SIZE];
+	char	*read_buffer;
 	t_list	*last_node;
 	int		bytes_read;
 	int		eol_present;
 
 	bytes_read = 1;
-	ft_bzero(read_buffer, BUFFER_SIZE);
 	last_node = *lst;
+	read_buffer = (char *) malloc(BUFFER_SIZE * sizeof(char) + 1);
 	while (bytes_read)
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
 		if (bytes_read == 0 || bytes_read < 0)
-			return (0);
+			return (free(read_buffer), 0);
 		read_buffer[bytes_read] = '\0';
-		//printf("%s\n-------------\n", read_buffer);
 		ft_lstadd_back(&last_node, ft_strdup(read_buffer));
 		eol_present = (ft_strchr(read_buffer, '\n') != NULL);
 		if (eol_present)
 			break ;
 		last_node = last_node->next;
 	}
+	free(read_buffer);
 	return (bytes_read);
 }
 
