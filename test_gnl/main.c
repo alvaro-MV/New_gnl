@@ -29,7 +29,7 @@ int main(void)
 	char	*next_line;
 	//size_t	bytes_read;
 
-	fd_1 = open("quijote.txt", O_RDONLY);
+	fd_1 = open("read_error.txt", O_RDONLY);
 	//int	n = 10;
 	//while (n--)
 	//{
