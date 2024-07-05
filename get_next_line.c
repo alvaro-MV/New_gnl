@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:37:28 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/05 19:55:37 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/05 20:45:55 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,65 +24,29 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-/* char	*ft_strdup(char *s1, char c)
+char    *ft_strdup(char *s1)
 {
 	char	*ptr;
 	int		len;
 	int		i;
 
+	if (s1 == NULL)
+		return (NULL);
 	len = 0;
 	i = 0;
-	if (!s1)
-		return (NULL);
-	while (s1[len] && s1[len] != c)
+	while (s1[len])
 		len++;
-	ptr = (char *) malloc(sizeof(char) * (len + 1));
+	ptr = (char *) malloc(len + 1);
 	if (ptr == NULL)
 		return (NULL);
-	ft_bzero(ptr, len + 2);
-	while (i < (len + 1))
+	while (i < len)
 	{
-		ptr[i] = s1[i];
+		ptr[i] =  s1[i];
 		i++;
 	}
-	if (s1[len] != c && len > 0)
-		ptr[len] = c;
+	ptr[i] = '\0';
 	return (ptr);
-}*/
-void    *ft_memcpy(void *dst, const void *src, size_t n)
-{
-        unsigned char   *ptrdst;
-        unsigned char   *ptrsrc;
-        size_t                  i;
-
-        if (dst == NULL && src == NULL)
-                return (NULL);
-        ptrdst = (unsigned char *) dst;
-        ptrsrc = (unsigned char *) src;
-        i = 0;
-        while (n--)
-        {
-                ptrdst[i] = ptrsrc[i];
-                i++;
-        }
-        return (ptrdst);
 }
-
-char    *ft_strdup(const char *s1)
-{
-        char    *ptr;
-        int             len;
-
-        len = 0;
-        while (s1[len])
-                len++;
-        ptr = (char *) malloc(len + 1);
-        if (ptr == NULL)
-                return (NULL);
-        ft_memcpy(ptr, s1, len + 1);
-        return (ptr);
-}
-
 
 int	get_lst_from_reads(int fd, t_list **lst)
 {
