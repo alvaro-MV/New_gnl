@@ -27,22 +27,20 @@ int main(void)
 {
 	int		fd_1;
 	char	*next_line;
-	//size_t	bytes_read;
 
-	fd_1 = open("quijote.txt", O_RDONLY);
-	//int	n = 10;
-	//while (n--)
-	//{
-		//next_line = get_next_line(fd_1);
-		//printf("%s", next_line);
-		//free(next_line);
-	//}
- 	while (ft_strncmp(next_line = get_next_line(fd_1), "") != 0)
+	fd_1 = open("text_files/41_no_nl", O_RDONLY);
+	int	n = 14;
+	while (n--)
 	{
+		next_line = get_next_line(fd_1);
 		printf("%s", next_line);
 		free(next_line);
 	}
-	free(next_line);
+//	while ((next_line = get_next_line(fd_1)) != NULL)
+	//{
+		//printf("%s", next_line);
+		//free(next_line);
+	//}
 	close(fd_1);
 	return (0);
 }

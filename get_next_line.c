@@ -1,133 +1,72 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 16:37:28 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/01 18:00:55 by alvmoral         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
+char	*ft_strjoin(char const *old, char const *new)
 {
-	if (n > 0)
-	{
-		while (n--)
-		{
-			*(char *) s = 0;
-			s++;
-		}
-	}
+	char	*ptr;
+	size_t	l1;
+	size_t	l2;
+	size_t	lt;
+
+	l1 = ft_strlen(old);
+	l2 = ft_strlen(new);
+	lt = l1 + l2;
+	ptr = (char *) malloc(lt * sizeof(char) + 1);
+	if (ptr == NULL)
+		return (NULL);
+	while (*old)
+		*ptr++ = *old++;
+	while (*new)
+		*ptr++ = *new++;
+	*ptr = '\0';
+    free(old);
+	return (ptr - lt);
 }
 
-char	*ft_strdup(char *s1, char c)
+char	*ft_strdup(const char *s1)
 {
 	char	*ptr;
 	int		len;
-	int		i;
+    int     i;
 
 	len = 0;
-	i = 0;
-	if (!s1)
-		return (NULL);
-	while (s1[len] && s1[len] != c)
+    i = 0;
+	while (s1[len])
 		len++;
-	ptr = (char *) malloc(sizeof(char) * (len + 1));
+	ptr = (char *) malloc(len + 1);
 	if (ptr == NULL)
 		return (NULL);
-	ft_bzero(ptr, len + 2);
-	while (i < (len + 1))
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	if (s1[len] != c && len > 0)
-		ptr[len] = c;
+    while (i < len)
+    {
+        ptr[i] = s1[i];
+        i++;
+    }
 	return (ptr);
 }
 
-int	get_lst_from_reads(int fd, t_list **lst)
+void    get_array_from_reads(int fd, char *leftovers)
 {
-	char	read_buffer[BUFFER_SIZE];
-	t_list	*last_node;
-	int		bytes_read;
-	int		eol_present;
-
-	bytes_read = 1;
-	ft_bzero(read_buffer, BUFFER_SIZE);
-	last_node = *lst;
-	while (bytes_read)
-	{
-		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
-		if (bytes_read == 0 || bytes_read < 0)
-			return (0);
-		read_buffer[bytes_read] = '\0';
-		ft_lstadd_back(&last_node, ft_strdup(read_buffer, '\0'));
-		eol_present = ft_strchr(read_buffer, '\n') != NULL;
-		if (eol_present)
-			break ;
-		last_node = last_node->next;
-	}
-	return (bytes_read);
+    char    *read_buffer;
+    int     bytes_read;
+    
+    bytes_read = 1;
+    while(bytes_read > 0)
+    {
+        bytes_read  = read(fd, read_buffer, BUFFER_SIZE);
+        ft_strjoin();
+    }
+    return (bytes_read);
 }
 
-void	fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
+char    *get_next_line(int fd)
 {
-	t_list	*first_node;
-	char	*lst_content;
-	int		i;
+    char        *return_buffer;
+    static char *leftovers;
+    int         bytes_read;
 
-	if (lst == NULL)
-		return ;
-	i = 0;
-	first_node = lst;
-	while (lst)
-	{
-		lst_content = lst->content;
-		while (*lst_content && *lst_content != '\n')
-			return_buffer[i++] = *lst_content++;
-		if (*lst_content++ == '\n')
-		{
-			return_buffer[i++] = '\n';
-			break ;
-		}
-		return_buffer[i] = '\0';
-		lst = lst->next;
-	}
-	i = 0;
-	while (*lst_content)
-		after_eol[i++] = *lst_content++;
-	after_eol[i] = '\0';
-	ft_lstclear(&first_node);
-}
+    if (!leftovers)
+    {
+        leftovers = (char *) malloc(1);
+		leftovers[0] = '\0';
+    }
 
-char	*get_next_line(int fd)
-{
-	static char	after_eol[BUFFER_SIZE];
-	char		*return_buffer;
-	t_list		*lst;
-	int			bytes_read;
-
-	if (fd < 0)
-		return (NULL);
-	lst = NULL;
-	bytes_read = 1;
-	ft_lstadd_front(&lst, ft_strdup(after_eol, '\0'));
-	if (ft_strchr(after_eol, '\n') == NULL)
-		bytes_read = get_lst_from_reads(fd, &lst);
-	return_buffer = (char *) malloc(BUFFER_SIZE * ft_lstsize(lst) + 2);
-	ft_bzero(return_buffer, BUFFER_SIZE * (ft_lstsize(lst) - 1) + 2);
-	fill_buffers(lst, return_buffer, after_eol);
-	if (bytes_read == 0)
-		after_eol[0] = '\0';
-	if (return_buffer[0] == '\0' && bytes_read <= 0)
-	{
-		free(return_buffer);
-		return (NULL);
-	}
-	return (return_buffer);
 }
