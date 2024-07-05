@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:37:28 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/01 18:00:55 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:23:01 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-char	*ft_strdup(char *s1, char c)
+/* char	*ft_strdup(char *s1, char c)
 {
 	char	*ptr;
 	int		len;
@@ -48,7 +48,41 @@ char	*ft_strdup(char *s1, char c)
 	if (s1[len] != c && len > 0)
 		ptr[len] = c;
 	return (ptr);
+}*/
+void    *ft_memcpy(void *dst, const void *src, size_t n)
+{
+        unsigned char   *ptrdst;
+        unsigned char   *ptrsrc;
+        size_t                  i;
+
+        if (dst == NULL && src == NULL)
+                return (NULL);
+        ptrdst = (unsigned char *) dst;
+        ptrsrc = (unsigned char *) src;
+        i = 0;
+        while (n--)
+        {
+                ptrdst[i] = ptrsrc[i];
+                i++;
+        }
+        return (ptrdst);
 }
+
+char    *ft_strdup(const char *s1)
+{
+        char    *ptr;
+        int             len;
+
+        len = 0;
+        while (s1[len])
+                len++;
+        ptr = (char *) malloc(len + 1);
+        if (ptr == NULL)
+                return (NULL);
+        ft_memcpy(ptr, s1, len + 1);
+        return (ptr);
+}
+
 
 int	get_lst_from_reads(int fd, t_list **lst)
 {
@@ -66,8 +100,9 @@ int	get_lst_from_reads(int fd, t_list **lst)
 		if (bytes_read == 0 || bytes_read < 0)
 			return (0);
 		read_buffer[bytes_read] = '\0';
-		ft_lstadd_back(&last_node, ft_strdup(read_buffer, '\0'));
-		eol_present = ft_strchr(read_buffer, '\n') != NULL;
+		//printf("%s\n-------------\n", read_buffer);
+		ft_lstadd_back(&last_node, ft_strdup(read_buffer));
+		eol_present = (ft_strchr(read_buffer, '\n') != NULL);
 		if (eol_present)
 			break ;
 		last_node = last_node->next;
@@ -90,18 +125,20 @@ void	fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
 		lst_content = lst->content;
 		while (*lst_content && *lst_content != '\n')
 			return_buffer[i++] = *lst_content++;
-		if (*lst_content++ == '\n')
+		if (*lst_content == '\n')
 		{
-			return_buffer[i++] = '\n';
+			return_buffer[i++] = *lst_content++;
 			break ;
 		}
-		return_buffer[i] = '\0';
 		lst = lst->next;
 	}
+	return_buffer[i] = '\0';
+	//printf("return_buffer: %s", return_buffer);
 	i = 0;
 	while (*lst_content)
 		after_eol[i++] = *lst_content++;
 	after_eol[i] = '\0';
+	//printf("after_eol: %s\n", after_eol);
 	ft_lstclear(&first_node);
 }
 
@@ -116,11 +153,11 @@ char	*get_next_line(int fd)
 		return (NULL);
 	lst = NULL;
 	bytes_read = 1;
-	ft_lstadd_front(&lst, ft_strdup(after_eol, '\0'));
+	ft_lstadd_front(&lst, ft_strdup(after_eol));
 	if (ft_strchr(after_eol, '\n') == NULL)
 		bytes_read = get_lst_from_reads(fd, &lst);
-	return_buffer = (char *) malloc(BUFFER_SIZE * ft_lstsize(lst) + 2);
-	ft_bzero(return_buffer, BUFFER_SIZE * (ft_lstsize(lst) - 1) + 2);
+	return_buffer = (char *) malloc(BUFFER_SIZE * ft_lstsize(lst) + 1);
+	ft_bzero(return_buffer, BUFFER_SIZE * (ft_lstsize(lst) - 1) + 1);
 	fill_buffers(lst, return_buffer, after_eol);
 	if (bytes_read == 0)
 		after_eol[0] = '\0';
