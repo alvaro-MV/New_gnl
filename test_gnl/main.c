@@ -27,10 +27,9 @@ int main(void)
 {
 	int		fd_1;
 	char	*next_line;
-	//size_t	bytes_read;
 
-	fd_1 = open("quijote.txt", O_RDONLY);
-	int	n = 457;
+	fd_1 = open("quijote_testing.txt", O_RDONLY);
+	int	n = 7;
 	while (n--)
 	{
 		next_line = get_next_line(fd_1);
