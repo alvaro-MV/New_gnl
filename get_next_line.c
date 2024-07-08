@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:37:28 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/08 11:24:07 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:25:51 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-char    *ft_strdup(char *s1)
+char	*ft_strdup(char *s1)
 {
 	char	*ptr;
 	int		len;
@@ -41,7 +41,7 @@ char    *ft_strdup(char *s1)
 		return (NULL);
 	while (i < len)
 	{
-		ptr[i] =  s1[i];
+		ptr[i] = s1[i];
 		i++;
 	}
 	ptr[i] = '\0';
