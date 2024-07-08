@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:37:28 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/08 11:25:51 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:52:43by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
 		return ;
 	i = 0;
 	first_node = lst;
+	free(after_eol);
 	while (lst)
 	{
 		lst_content = lst->content;
@@ -99,20 +100,19 @@ void	fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
 		lst = lst->next;
 	}
 	return_buffer[i] = '\0';
-	while (*lst_content)
-		*after_eol++ = *lst_content++;
-	*after_eol = '\0';
+	//while (*lst_content)
+	after_eol = ft_strdup(lst_content);
 	ft_lstclear(&first_node);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	after_eol[BUFFER_SIZE];
+	static char	*after_eol;
 	char		*return_buffer;
 	t_list		*lst;
 	int			bytes_read;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE < 1 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
 	lst = NULL;
 	bytes_read = 1;
