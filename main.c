@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
-char	*ft_strdup(const char *s1, char c);
-
 int	ft_strncmp(char	*s1, char	*s2)
 {
 	if (!s1 || !s2)

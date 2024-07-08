@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:43:19 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/08 12:48:19 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:32:49 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
+
+#define EOL_SIZE (BUFFER_SIZE < 1) + !(BUFFER_SIZE < 1) * BUFFER_SIZE
 
 typedef struct s_list
 {
