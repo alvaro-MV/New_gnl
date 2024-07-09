@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <unistd.h>
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -51,12 +52,10 @@ char	*ft_strdup(char *s1)
 int	get_lst_from_reads(int fd, t_list **lst)
 {
 	char	*read_buffer;
-	t_list	*last_node;
 	int		bytes_read;
 	int		eol_present;
 
 	bytes_read = 1;
-	last_node = *lst;
 	read_buffer = (char *) malloc(BUFFER_SIZE * sizeof(char) + 1);
 	while (bytes_read)
 	{
@@ -64,26 +63,26 @@ int	get_lst_from_reads(int fd, t_list **lst)
 		if (bytes_read == 0 || bytes_read < 0)
 			return (free(read_buffer), 0);
 		read_buffer[bytes_read] = '\0';
-		ft_lstadd_back(&last_node, ft_strdup(read_buffer));
+		ft_lstadd_back(lst, ft_strdup(read_buffer));
 		if (*lst == NULL)
 			return (0);
 		eol_present = (ft_strchr(read_buffer, '\n') != NULL);
 		if (eol_present)
 			break ;
-		last_node = last_node->next;
 	}
 	free(read_buffer);
 	return (bytes_read);
 }
 
-void	fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
+char	*fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
 {
 	t_list	*first_node;
 	char	*lst_content;
 	int		i;
 
+	free(after_eol);
 	if (lst == NULL)
-		return ;
+		return NULL;
 	i = 0;
 	first_node = lst;
 	while (lst)
@@ -99,15 +98,14 @@ void	fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
 		lst = lst->next;
 	}
 	return_buffer[i] = '\0';
-	while (*lst_content)
-		*after_eol++ = *lst_content++;
-	*after_eol = '\0';
+	after_eol = ft_strdup(lst_content);
 	ft_lstclear(&first_node);
+	return (after_eol);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	after_eol[EOL_SIZE];
+	static char	*after_eol;
 	char		*return_buffer;
 	t_list		*lst;
 	int			bytes_read;
@@ -116,20 +114,19 @@ char	*get_next_line(int fd)
 		return (NULL);
 	lst = NULL;
 	bytes_read = 1;
-	ft_lstadd_front(&lst, ft_strdup(after_eol));
-	if (lst == NULL)
-		return (NULL);
+	if (after_eol != NULL)
+		ft_lstadd_front(&lst, ft_strdup(after_eol));
 	if (ft_strchr(after_eol, '\n') == NULL)
 		bytes_read = get_lst_from_reads(fd, &lst);
 	return_buffer = (char *) malloc(BUFFER_SIZE * ft_lstsize(lst) + 1);
 	ft_bzero(return_buffer, BUFFER_SIZE * (ft_lstsize(lst) - 1) + 1);
-	fill_buffers(lst, return_buffer, after_eol);
+	after_eol = fill_buffers(lst, return_buffer, after_eol);
 	if (bytes_read == 0)
 		after_eol[0] = '\0';
 	if (return_buffer[0] == '\0' && bytes_read <= 0)
 	{
 		free(return_buffer);
-		return (NULL);
+		return (free(after_eol), NULL);
 	}
 	return (return_buffer);
 }
