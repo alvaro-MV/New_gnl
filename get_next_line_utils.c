@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:47:09 by alvaro            #+#    #+#             */
-/*   Updated: 2024/07/08 11:23:39 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:32:40 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,16 @@ char	*ft_strchr(char *s, int c)
 	else
 		return (0);
 }
-
-void	ft_lstadd_front(t_list **lst, char *content)
+void	ft_bzero(void *s, size_t n)
 {
-	t_list	*list;
-	t_list	*new_n;
-
-	if (!content)
-		return ;
-	new_n = (t_list *) malloc(sizeof(t_list));
-	if (new_n == NULL)
-		return ;
-	new_n->content = content;
-	list = *lst;
-	new_n->next = list;
-	*lst = new_n;
+	if (n > 0)
+	{
+		while (n--)
+		{
+			*(char *) s = 0;
+			s++;
+		}
+	}
 }
 
 void	ft_lstadd_back(t_list **lst, char *content)
