@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:47:09 by alvaro            #+#    #+#             */
-/*   Updated: 2024/07/08 11:23:39 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:39:12 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	ft_lstadd_front(t_list **lst, char *content)
 		return ;
 	new_n = (t_list *) malloc(sizeof(t_list));
 	if (new_n == NULL)
+	{
+		free(content);
 		return ;
+	}
 	new_n->content = content;
 	list = *lst;
 	new_n->next = list;

@@ -26,7 +26,7 @@ int main(void)
 	int		fd_1;
 	char	*next_line;
 
-	fd_1 = open("text_files/text_file4.txt", O_RDONLY);
+	fd_1 = open("text_files/read_error.txt", O_RDONLY);
 //	int	n = 7;
 	//while (n--)
 	//{
