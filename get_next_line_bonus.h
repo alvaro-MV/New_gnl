@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:37:26 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/08 11:57:31 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:23:33 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ typedef struct s_list
 }					t_list;
 
 char	*get_next_line(int fd);
-void	ft_bzero(void *s, size_t n);
 char	*ft_strdup(char *s1);
 int		get_lst_from_reads(int fd, t_list **lst);
-void	fill_buffers(t_list *lst, char *return_buffer, char *after_eol);
+char	*fill_return_buffer(t_list *lst, char *return_buffer, int bytes_read);
+char	*fill_after_eol(t_list *lst, char *after_eol, int bytes_read);
 char	*ft_strchr(char *s, int c);
-void	ft_lstadd_front(t_list **lst, char *content);
 void	ft_lstadd_back(t_list **lst, char *content);
 void	ft_lstclear(t_list **lst);
 int		ft_lstsize(t_list *lst);

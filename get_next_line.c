@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <unistd.h>
 
 char	*ft_strdup(char *s1)
 {
@@ -117,39 +115,6 @@ char	*fill_after_eol(t_list *lst, char *after_eol, int bytes_read)
 		after_eol = ft_strdup("\0");
 	return (after_eol);
 }
-
-
-//Cuando
-
-
-//char	*fill_buffers(t_list *lst, char *return_buffer, char *after_eol)
-//{
-	//t_list	*first_node;
-	//char	*lst_content;
-	//int		i;
-
-	//free(after_eol);
-	//if (lst == NULL)
-		//return NULL;
-	//i = 0;
-	//first_node = lst;
-	//while (lst)
-	//{
-		//lst_content = lst->content;
-		//while (*lst_content && *lst_content != '\n')
-			//return_buffer[i++] = *lst_content++;
-		//if (*lst_content == '\n')
-		//{
-			//return_buffer[i++] = *lst_content++;
-			//break ;
-		//}
-		//lst = lst->next;
-	//}
-	//return_buffer[i] = '\0';
-	//after_eol = ft_strdup(lst_content); //Este falta por gestionar.
-	//ft_lstclear(&first_node);
-	//return (after_eol);
-//}
 
 char	*get_next_line(int fd)
 {

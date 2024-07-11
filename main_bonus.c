@@ -2,8 +2,6 @@
 #include "get_next_line_bonus.h"
 #include <stdio.h>
 
-char	*ft_strdup(const char *s1, char c);
-
 int	ft_strncmp(char	*s1, char	*s2)
 {
 	if (!s1 || !s2)
@@ -26,30 +24,18 @@ int main(void) {
 	int		fd_2;
 	char	*next_line;
 
-	fd_1 = open("text_files/text_file7.txt", O_RDONLY);
+	fd_1 = open("text_files/nl", O_RDONLY);
 	fd_2 = open("ultima.txt", O_RDONLY);
-	//int	n = 5;
-//	while (n--)
-	//{
-		//next_line = get_next_line(fd_1);
-		//printf("%s", next_line);
-		//free(next_line);
-		//next_line = get_next_line(fd_2);
-		//printf("%s", next_line);
-		//free(next_line);
-	//}
- 	while (ft_strncmp(next_line = get_next_line(fd_1), "") != 0)
+ 	while ((next_line = get_next_line(fd_1)) != 0)
 	{
 		printf("%s", next_line);
 		free(next_line);
 	}
-	free(next_line);
- 	while (ft_strncmp(next_line = get_next_line(fd_2), "") != 0)
+ 	while ((next_line = get_next_line(fd_2)) != 0)
 	{
 		printf("%s", next_line);
 		free(next_line);
 	}
-	free(next_line);
 	close(fd_1);
 	close(fd_2);
 	return (0);
