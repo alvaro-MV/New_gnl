@@ -68,8 +68,8 @@ int	get_lst_from_reads(int fd, t_list **lst)
 
 char	*fill_return_buffer(t_list *lst, char *return_buffer, int bytes_read)
 {
-	int		i;
 	t_list	*first_node;
+	int		i;
 	char	*lst_content;
 
 	if (lst == NULL)
@@ -89,6 +89,7 @@ char	*fill_return_buffer(t_list *lst, char *return_buffer, int bytes_read)
 		lst = lst->next;
 	}
 	return_buffer[i] = '\0';
+	ft_lstclear(&first_node);
 	if (return_buffer[0] == '\0' && bytes_read <= 0)
 		return (free(return_buffer), NULL);
 	return (return_buffer);
@@ -97,11 +98,11 @@ char	*fill_return_buffer(t_list *lst, char *return_buffer, int bytes_read)
 char	*fill_after_eol(t_list *lst, char	*after_eol)
 {
 	char	*lst_content;
-	t_list	*first_node;
+	//t_list	*first_node;
 	t_list	*holder;
 	
 	free(after_eol);
-	first_node = lst;
+	//first_node = lst;
 	while (lst != NULL)
 	{
 		holder = lst;
@@ -112,7 +113,7 @@ char	*fill_after_eol(t_list *lst, char	*after_eol)
 		ft_strdup("\0");
 	else
 		after_eol = ft_strdup(lst_content);
-	ft_lstclear(&first_node);
+	//ft_lstclear(&first_node);
 	return (after_eol);
 }
 
@@ -166,13 +167,14 @@ char	*get_next_line(int fd)
 		bytes_read = get_lst_from_reads(fd, &lst);
 	if (bytes_read == -1)
 		return (NULL);
-	return_buffer = (char *) malloc(BUFFER_SIZE * ft_lstsize(lst) + 1);
-	ft_bzero(return_buffer, BUFFER_SIZE * (ft_lstsize(lst) - 1) + 1);
-	return_buffer = fill_return_buffer(lst, return_buffer, bytes_read);
+	return_buffer = ft_calloc(ft_lstsize(lst) + 1, BUFFER_SIZE);
 	if (return_buffer == NULL)
 		return (free(after_eol), NULL);
 	after_eol = fill_after_eol(lst, after_eol); 
 	if (after_eol == NULL)
 		return (free(return_buffer), NULL);
+	return_buffer = fill_return_buffer(lst, return_buffer, bytes_read);
+	if (return_buffer == NULL)
+		return (free(after_eol), NULL);
 	return (return_buffer);
 }

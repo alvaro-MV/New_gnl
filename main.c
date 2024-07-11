@@ -26,14 +26,7 @@ int main(void)
 	int		fd_1;
 	char	*next_line;
 
-	fd_1 = open("text_files/text_file6.txt", O_RDONLY);
-//	int	n = 7;
-	//while (n--)
-	//{
-		//next_line = get_next_line(fd_1);
-		//printf("%s", next_line);
-		//free(next_line);
-	//}
+	fd_1 = open("text_files/text_file2.txt", O_RDONLY);
  	while (ft_strncmp(next_line = get_next_line(fd_1), "") != 0)
 	{
 		printf("%s", next_line);

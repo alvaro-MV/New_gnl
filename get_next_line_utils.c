@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:47:09 by alvaro            #+#    #+#             */
-/*   Updated: 2024/07/10 18:32:40 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:23:42 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,25 @@ char	*ft_strchr(char *s, int c)
 	else
 		return (0);
 }
-void	ft_bzero(void *s, size_t n)
+
+void    *ft_calloc(size_t count, size_t size)
 {
-	if (n > 0)
+	void    *ptr;
+
+	if (count && size && SIZE_MAX / count < size)
+			return (NULL);
+	ptr = malloc(count * size);
+	if (ptr == NULL)
+			return (NULL);
+	if (size > 0)
 	{
-		while (n--)
+		while (size--)
 		{
-			*(char *) s = 0;
-			s++;
+			*(char *) ptr = 0;
+			ptr++;
 		}
 	}
+	return (ptr);
 }
 
 void	ft_lstadd_back(t_list **lst, char *content)

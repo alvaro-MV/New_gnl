@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:43:19 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/09 17:33:05 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/07/11 11:07:25 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
+# include <stdint.h>
 # include <stddef.h>
 # include <unistd.h>
 # include <limits.h>
@@ -22,8 +23,6 @@
 #  define BUFFER_SIZE 42
 # endif
 
-#define EOL_SIZE (BUFFER_SIZE < 1) + !(BUFFER_SIZE < 1) * BUFFER_SIZE
-
 typedef struct s_list
 {
 	void			*content;
@@ -31,12 +30,11 @@ typedef struct s_list
 }					t_list;
 
 char	*get_next_line(int fd);
-void	ft_bzero(void *s, size_t n);
+void    *ft_calloc(size_t count, size_t size);
 char	*ft_strdup(char *s1);
 int		get_lst_from_reads(int fd, t_list **lst);
 char	*fill_buffers(t_list *lst, char *return_buffer, char *after_eol);
 char	*ft_strchr(char *s, int c);
-void	ft_lstadd_front(t_list **lst, char *content);
 void	ft_lstadd_back(t_list **lst, char *content);
 void	ft_lstclear(t_list **lst);
 int		ft_lstsize(t_list *lst);
