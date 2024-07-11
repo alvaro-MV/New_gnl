@@ -26,7 +26,7 @@ int main(void)
 	int		fd_1;
 	char	*next_line;
 
-	fd_1 = open("text_files/text_file1.txt", O_RDONLY);
+	fd_1 = open("text_files/text_file2.txt", O_RDONLY);
  	while (ft_strncmp(next_line = get_next_line(fd_1), "") != 0)
 	{
 		printf("%s", next_line);
