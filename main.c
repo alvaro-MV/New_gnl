@@ -32,7 +32,7 @@ int main(void)
 		printf("%s", next_line);
 		free(next_line);
 	}
-	free(next_line);
+	//free(next_line);
 	close(fd_1);
 	return (0);
 }

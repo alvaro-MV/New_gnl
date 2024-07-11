@@ -95,25 +95,26 @@ char	*fill_return_buffer(t_list *lst, char *return_buffer, int bytes_read)
 	return (return_buffer);
 }
 
-char	*fill_after_eol(t_list *lst, char	*after_eol)
+char	*fill_after_eol(t_list *lst, char *after_eol, int bytes_read)
 {
 	char	*lst_content;
-	//t_list	*first_node;
 	t_list	*holder;
+	char	*holder_content;
 	
 	free(after_eol);
-	//first_node = lst;
 	while (lst != NULL)
 	{
 		holder = lst;
 		lst = lst->next;
 	}
 	lst_content = ft_strchr(holder->content, '\n');
-	if (lst_content == NULL)
-		ft_strdup("\0");
-	else
+	holder_content = holder->content;
+	if (lst_content != NULL) 
 		after_eol = ft_strdup(lst_content);
-	//ft_lstclear(&first_node);
+	else if (holder_content != NULL && bytes_read > 0)
+		after_eol = ft_strdup(holder_content);
+	else
+		after_eol = ft_strdup("\0");
 	return (after_eol);
 }
 
@@ -167,10 +168,10 @@ char	*get_next_line(int fd)
 		bytes_read = get_lst_from_reads(fd, &lst);
 	if (bytes_read == -1)
 		return (NULL);
-	return_buffer = ft_calloc(ft_lstsize(lst) + 1, BUFFER_SIZE);
+	return_buffer = malloc((ft_lstsize(lst) + 1) * BUFFER_SIZE);
 	if (return_buffer == NULL)
 		return (free(after_eol), NULL);
-	after_eol = fill_after_eol(lst, after_eol); 
+	after_eol = fill_after_eol(lst, after_eol, bytes_read); 
 	if (after_eol == NULL)
 		return (free(return_buffer), NULL);
 	return_buffer = fill_return_buffer(lst, return_buffer, bytes_read);
