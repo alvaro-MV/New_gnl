@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:43:19 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/11 12:06:00 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/07/12 14:00:07 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_list
 }					t_list;
 
 char	*get_next_line(int fd);
-void    *ft_calloc(size_t count, size_t size);
+void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(char *s1);
 int		get_lst_from_reads(int fd, t_list **lst);
 char	*fill_buffers(t_list *lst, char *return_buffer, char *after_eol);

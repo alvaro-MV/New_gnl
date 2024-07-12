@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:47:09 by alvaro            #+#    #+#             */
-/*   Updated: 2024/07/12 12:59:05 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/12 14:01:32 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ char	*ft_strchr(char *s, int c)
 		return (0);
 }
 
-void    *ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
-	void    *ptr;
+	void	*ptr;
 
 	if (count && size && SIZE_MAX / count < size)
-			return (NULL);
+		return (NULL);
 	ptr = malloc(count * size);
 	if (ptr == NULL)
-			return (NULL);
+		return (NULL);
 	if (size > 0)
 	{
 		while (size--)
