@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:37:34 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/11 13:21:21 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/07/12 13:47:14 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	*get_next_line(int fd)
 		ft_lstadd_back(&lst, ft_strdup(after_eol[fd])); 
 	if (ft_strchr(after_eol[fd], '\n') == NULL) 
 		bytes_read = get_lst_from_reads(fd, &lst);
-	if (bytes_read == -1)
+	if (bytes_read == -1 || !lst)
 		return (NULL);
 	return_buffer = malloc((ft_lstsize(lst) + 1) * BUFFER_SIZE);
 	if (return_buffer == NULL)

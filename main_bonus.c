@@ -24,7 +24,7 @@ int main(void) {
 	int		fd_2;
 	char	*next_line;
 
-	fd_1 = open("text_files/nl", O_RDONLY);
+	fd_1 = open("text_files/big_line_with_nl", O_RDONLY);
 	fd_2 = open("ultima.txt", O_RDONLY);
  	while ((next_line = get_next_line(fd_1)) != 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:37:28 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/07/08 11:52:43by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:28:04 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*fill_return_buffer(t_list *lst, char *return_buffer, int bytes_read)
 	char	*lst_content;
 
 	if (lst == NULL)
-		return NULL;
+		return (NULL);
 	i = 0;
 	first_node = lst;
 	while (lst)
@@ -98,7 +98,7 @@ char	*fill_after_eol(t_list *lst, char *after_eol, int bytes_read)
 	char	*lst_content;
 	t_list	*holder;
 	char	*holder_content;
-	
+
 	free(after_eol);
 	while (lst != NULL)
 	{
@@ -107,7 +107,7 @@ char	*fill_after_eol(t_list *lst, char *after_eol, int bytes_read)
 	}
 	lst_content = ft_strchr(holder->content, '\n');
 	holder_content = holder->content;
-	if (lst_content != NULL) 
+	if (lst_content != NULL)
 		after_eol = ft_strdup(lst_content);
 	else if (holder_content != NULL && bytes_read > 0)
 		after_eol = ft_strdup(holder_content);
@@ -128,15 +128,15 @@ char	*get_next_line(int fd)
 	lst = NULL;
 	bytes_read = 1;
 	if (after_eol != NULL)
-		ft_lstadd_back(&lst, ft_strdup(after_eol)); 
-	if (ft_strchr(after_eol, '\n') == NULL) 
+		ft_lstadd_back(&lst, ft_strdup(after_eol));
+	if (ft_strchr(after_eol, '\n') == NULL)
 		bytes_read = get_lst_from_reads(fd, &lst);
-	if (bytes_read == -1)
+	if (bytes_read < 0 || !lst)
 		return (NULL);
 	return_buffer = malloc((ft_lstsize(lst) + 1) * BUFFER_SIZE);
 	if (return_buffer == NULL)
 		return (free(after_eol), NULL);
-	after_eol = fill_after_eol(lst, after_eol, bytes_read); 
+	after_eol = fill_after_eol(lst, after_eol, bytes_read);
 	if (after_eol == NULL)
 		return (free(return_buffer), NULL);
 	return_buffer = fill_return_buffer(lst, return_buffer, bytes_read);
